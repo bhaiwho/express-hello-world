@@ -30,6 +30,9 @@ app.post("/webhook", (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Server is running! Webhook is ready.");
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
