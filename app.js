@@ -21,11 +21,17 @@ app.get("/webhook", (req, res) => {
 
 // Webhook POST for receiving messages
 app.post("/webhook", (req, res) => {
-  const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
-  console.log(`\n\nWebhook received ${timestamp}\n`);
-  console.log(JSON.stringify(req.body, null, 2));
-  res.status(200).end();
+  try {
+    console.log("Webhook received:", JSON.stringify(req.body, null, 2));
+
+    // Always respond quickly (Meta expects 200 OK within 10 seconds)
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("Error in webhook handler:", err);
+    res.sendStatus(500);
+  }
 });
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
